@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(azd env get-values:*)",
+      "Bash(azd env set:*)",
+      "Bash(.start.ps1)",
+      "Bash(powershell:*)",
+      "Bash(xcopy:*)",
+      "Bash(robocopy:*)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(set AZURE_USE_AUTHENTICATION=false)",
+      "Bash(set AZURE_ENABLE_UNAUTHENTICATED_ACCESS=true)",
+      "Bash(timeout 8 python run_server.py)",
+      "Bash(start python simple_server.py)",
+      "Bash(timeout 3 curl http://localhost:50505/auth_setup)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(.venvScriptspython.exe backendrun_server.py)",
+      "Bash(..venvScriptspython.exe backendrun_server.py)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}

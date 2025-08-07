@@ -13,6 +13,10 @@ import i18next from "./i18n/config";
 
 initializeIcons();
 
+// Set HTML direction to RTL for Hebrew
+document.documentElement.setAttribute('dir', 'rtl');
+document.documentElement.setAttribute('lang', 'he');
+
 const router = createHashRouter([
     {
         path: "/",

@@ -1,0 +1,122 @@
+:root {
+  /* Replace with your company colors */
+  --company-primary: #1e3a8a;     /* Your primary brand color */
+  --company-secondary: #3b82f6;   /* Your secondary brand color */
+  --company-accent: #06d6a0;      /* Your accent color */
+  --company-text: #1f2937;        /* Your text color */
+  --company-bg: #f8fafc;          /* Your background color */
+  
+  /* Gradients using your colors */
+  --company-gradient: linear-gradient(135deg, var(--company-primary) 0%, var(--company-secondary) 100%);
+  --company-gradient-light: linear-gradient(135deg, var(--company-bg) 0%, #e2e8f0 100%);
+  
+  /* Semantic color variations */
+  --company-primary-50: #eff6ff;
+  --company-primary-100: #dbeafe;
+  --company-primary-200: #bfdbfe;
+  --company-primary-300: #93c5fd;
+  --company-primary-400: #60a5fa;
+  --company-primary-500: var(--company-secondary);
+  --company-primary-600: #2563eb;
+  --company-primary-700: var(--company-primary);
+  --company-primary-800: #1e40af;
+  --company-primary-900: #1e3a8a;
+  
+  /* Success, warning, error colors */
+  --company-success: #10b981;
+  --company-warning: #f59e0b;
+  --company-error: #ef4444;
+  
+  /* Neutral grays */
+  --company-gray-50: #f9fafb;
+  --company-gray-100: #f3f4f6;
+  --company-gray-200: #e5e7eb;
+  --company-gray-300: #d1d5db;
+  --company-gray-400: #9ca3af;
+  --company-gray-500: #6b7280;
+  --company-gray-600: #4b5563;
+  --company-gray-700: #374151;
+  --company-gray-800: #1f2937;
+  --company-gray-900: #111827;
+  
+  /* Shadows */
+  --company-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --company-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --company-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --company-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --company-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Transition timings */
+  --company-transition: all 0.3s ease;
+  --company-transition-fast: all 0.15s ease;
+  --company-transition-slow: all 0.5s ease;
+  
+  /* Border radius */
+  --company-radius-sm: 0.25rem;
+  --company-radius: 0.5rem;
+  --company-radius-md: 0.75rem;
+  --company-radius-lg: 1rem;
+  --company-radius-xl: 1.5rem;
+  
+  /* Spacing scale */
+  --company-space-1: 0.25rem;
+  --company-space-2: 0.5rem;
+  --company-space-3: 0.75rem;
+  --company-space-4: 1rem;
+  --company-space-5: 1.25rem;
+  --company-space-6: 1.5rem;
+  --company-space-8: 2rem;
+  --company-space-10: 2.5rem;
+  --company-space-12: 3rem;
+  --company-space-16: 4rem;
+  --company-space-20: 5rem;
+  
+  /* Font sizes */
+  --company-text-xs: 0.75rem;
+  --company-text-sm: 0.875rem;
+  --company-text-base: 1rem;
+  --company-text-lg: 1.125rem;
+  --company-text-xl: 1.25rem;
+  --company-text-2xl: 1.5rem;
+  --company-text-3xl: 1.875rem;
+  --company-text-4xl: 2.25rem;
+  --company-text-5xl: 3rem;
+  
+  /* Z-index scale */
+  --company-z-dropdown: 1000;
+  --company-z-sticky: 1020;
+  --company-z-fixed: 1030;
+  --company-z-modal-backdrop: 1040;
+  --company-z-modal: 1050;
+  --company-z-popover: 1060;
+  --company-z-tooltip: 1070;
+  --company-z-toast: 1080;
+}
+
+/* Dark mode color overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --company-bg: #0f172a;
+    --company-text: #f1f5f9;
+    --company-gray-50: #1e293b;
+    --company-gray-100: #334155;
+    --company-gray-200: #475569;
+    --company-gray-300: #64748b;
+    --company-gray-400: #94a3b8;
+    --company-gray-500: #cbd5e1;
+    --company-gray-600: #e2e8f0;
+    --company-gray-700: #f1f5f9;
+    --company-gray-800: #f8fafc;
+    --company-gray-900: #ffffff;
+  }
+}
+
+/* High contrast mode overrides */
+@media (prefers-contrast: high) {
+  :root {
+    --company-primary: #000000;
+    --company-secondary: #000000;
+    --company-text: #000000;
+    --company-bg: #ffffff;
+  }
+}

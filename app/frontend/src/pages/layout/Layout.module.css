@@ -5,77 +5,114 @@
 }
 
 .header {
-    background-color: #222222;
-    color: #f2f2f2;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-bottom: 3px solid #1d4ed8;
+    position: relative;
+    z-index: 50;
 }
 
 .headerContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 0.75rem 2rem;
     position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .headerTitleContainer {
     display: flex;
     align-items: center;
-    color: #f2f2f2;
+    color: #ffffff;
     text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.headerTitleContainer:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
 }
 
 .headerLogo {
-    height: 2rem;
+    height: 3rem;
     width: auto;
+    margin-left: 0.75rem; /* RTL: margin on the left for Hebrew */
+    filter: brightness(1.1);
+    transition: all 0.3s ease;
+}
+
+.headerLogo:hover {
+    filter: brightness(1.2) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
 }
 
 .headerTitle {
-    margin-left: 0.5rem;
-    font-weight: 600;
+    margin-right: 0.75rem; /* RTL: margin on the right for Hebrew */
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, #ffffff, #e0e7ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .headerNavList {
     z-index: 100;
     display: none;
     flex-direction: column;
-    background-color: #222222;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
     position: absolute;
-    top: 2.7rem;
+    top: 4rem;
     right: 0;
     width: auto;
     list-style: none;
-    padding: 1.1rem;
+    padding: 1.5rem;
     align-items: flex-end;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .headerNavList.show {
-    display: flex; /* Show when toggled */
+    display: flex;
 }
 
 .headerNavPageLink {
-    padding: 1rem;
-    border-bottom: 1px solid #333;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     text-align: right;
-    color: #f2f2f2;
+    color: #ffffff;
     text-decoration: none;
-    opacity: 0.75;
-    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-    transition-duration: 500ms;
-    transition-property: opacity;
-    font-size: 1.2rem;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .headerNavPageLink:hover {
     opacity: 1;
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(-4px); /* RTL: translate left for Hebrew */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .headerNavPageLinkActive {
-    color: #f2f2f2;
+    color: #ffffff;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     text-align: right;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .headerNavLeftMargin {
@@ -84,23 +121,42 @@
 
 .menuToggle {
     display: block;
-    background: none;
-    border: none;
-    color: #f2f2f2;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
     font-size: 1.5rem;
     cursor: pointer;
     z-index: 101;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+    padding: 0.5rem !important;
+}
+
+.menuToggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    transform: scale(1.05);
 }
 
 .loginMenuContainer {
     display: flex;
     align-items: center;
-    gap: 0; /* Ensure no gap between login button and menu toggle */
+    gap: 1rem;
 }
 
+/* Desktop styles */
 @media (min-width: 992px) {
+    .headerContainer {
+        padding: 1rem 2rem;
+    }
+    
     .headerTitle {
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 1.75rem;
+    }
+    
+    .headerLogo {
+        height: 3.5rem;
     }
 
     .headerNavList {
@@ -110,35 +166,84 @@
         padding: 0;
         position: static;
         width: auto;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        gap: 1rem;
     }
 
     .headerNavPageLink {
         border-bottom: none;
-        padding: 0;
+        padding: 0.75rem 1.5rem;
         display: block;
+        margin-bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        font-weight: 500;
     }
 
     .headerNavPageLink:hover {
         opacity: 1;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
     }
 
     .headerNavPageLinkActive {
-        color: #f2f2f2;
+        color: #ffffff;
         text-decoration: none;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 25px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .headerNavLeftMargin {
-        margin-left: 1.25rem;
+        margin-right: 1.25rem; /* RTL: margin-right for Hebrew */
         display: block;
-    }
-
-    .headerRightText {
-        font-weight: normal;
-        display: inline-block;
-        vertical-align: middle;
     }
 
     .menuToggle {
         display: none;
+    }
+}
+
+/* RTL specific adjustments for Hebrew */
+[dir="rtl"] .headerTitleContainer {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .headerLogo {
+    margin-left: 0;
+    margin-right: 0.75rem;
+}
+
+[dir="rtl"] .headerTitle {
+    margin-left: 0;
+    margin-right: 0.75rem;
+}
+
+[dir="rtl"] .headerNavList {
+    left: 0;
+    right: auto;
+    align-items: flex-start;
+}
+
+[dir="rtl"] .headerNavPageLink {
+    text-align: left;
+}
+
+[dir="rtl"] .headerNavPageLinkActive {
+    text-align: left;
+}
+
+[dir="rtl"] .headerNavPageLink:hover {
+    transform: translateX(4px); /* Reverse direction for RTL */
+}
+
+@media (min-width: 992px) {
+    [dir="rtl"] .headerNavLeftMargin {
+        margin-left: 1.25rem;
+        margin-right: 0;
     }
 }

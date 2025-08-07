@@ -1,9 +1,15 @@
+/* Import company color variables */
+@import './styles/variables.css';
+
+/* RTL and Hebrew support */
 * {
     box-sizing: border-box;
 }
 
 html {
-    background: #f2f2f2;
+    direction: rtl;
+    scroll-behavior: smooth;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     font-size: 12px; /* Root font size for 320px width screens */
     font-family:
         "Segoe UI",
@@ -19,12 +25,33 @@ html {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
 }
 
 body {
-    height: 100%;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
     margin: 0;
     padding: 0;
+}
+
+/* Enhanced background pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
 }
 
 #root {
@@ -52,5 +79,160 @@ body {
 @media (min-width: 992px) {
     html {
         font-size: 16px; /* Standard size for desktops */
+    }
+}
+
+/* Keep technical content LTR */
+.code-block, 
+.citation-link,
+.developer-settings,
+pre, 
+code,
+.search-results,
+.api-response,
+input[type="number"],
+input[type="url"] {
+    direction: ltr;
+    text-align: left;
+}
+
+/* Enhanced chat interface */
+.chat-container {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Beautiful input styling */
+input, textarea {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+input:focus, textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+}
+
+/* Button enhancements */
+button {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Card styling for content */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Loading animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+/* Ensure Hebrew text displays correctly */
+[lang="he"], 
+html[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+    
+    .card {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .header {
+        background: #000000;
+        border-bottom: 3px solid #ffffff;
+    }
+    
+    .headerTitle {
+        background: #ffffff;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+    
+    .card {
+        background: rgba(30, 41, 59, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 }
