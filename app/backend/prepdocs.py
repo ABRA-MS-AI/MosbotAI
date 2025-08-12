@@ -8,6 +8,7 @@ from azure.core.credentials import AzureKeyCredential
 from azure.core.credentials_async import AsyncTokenCredential
 from azure.identity.aio import AzureDeveloperCliCredential, get_bearer_token_provider
 from rich.logging import RichHandler
+from prepdocslib.bloblistfilestrategy import BlobListFileStrategy
 
 from load_azd_env import load_azd_env
 from prepdocslib.blobmanager import BlobManager
@@ -104,9 +105,26 @@ def setup_list_file_strategy(
     datalake_filesystem: Union[str, None],
     datalake_path: Union[str, None],
     datalake_key: Union[str, None],
+    # Add new parameters for blob storage
+    blob_storage_account: Union[str, None] = None,
+    blob_container: Union[str, None] = None,
+    blob_path_prefix: Union[str, None] = None,
+    blob_storage_key: Union[str, None] = None,
 ):
     list_file_strategy: ListFileStrategy
-    if datalake_storage_account:
+    
+    # Check for blob storage first (your new implementation)
+    if blob_storage_account and blob_container:
+        blob_creds: Union[AsyncTokenCredential, str] = azure_credential if blob_storage_key is None else blob_storage_key
+        logger.info("Using Azure Blob Storage Account: %s, Container: %s", blob_storage_account, blob_container)
+        list_file_strategy = BlobListFileStrategy(
+            storage_account=blob_storage_account,
+            container_name=blob_container,
+            blob_path_prefix=blob_path_prefix or "",
+            credential=blob_creds,
+        )
+    # Existing ADLS Gen2 logic
+    elif datalake_storage_account:
         if datalake_filesystem is None or datalake_path is None:
             raise ValueError("DataLake file system and path are required when using Azure Data Lake Gen2")
         adls_gen2_creds: Union[AsyncTokenCredential, str] = azure_credential if datalake_key is None else datalake_key
@@ -117,11 +135,13 @@ def setup_list_file_strategy(
             data_lake_path=datalake_path,
             credential=adls_gen2_creds,
         )
+    # Existing local files logic
     elif local_files:
         logger.info("Using local files: %s", local_files)
         list_file_strategy = LocalListFileStrategy(path_pattern=local_files)
     else:
-        raise ValueError("Either local_files or datalake_storage_account must be provided.")
+        raise ValueError("Either local_files, datalake_storage_account, or blob_storage_account must be provided.")
+    
     return list_file_strategy
 
 
@@ -287,7 +307,7 @@ if __name__ == "__main__":
         help="Remove all blobs from blob storage and documents from the search index",
     )
 
-    # Optional key specification:
+    # Existing key specification arguments...
     parser.add_argument(
         "--searchkey",
         required=False,
@@ -306,6 +326,29 @@ if __name__ == "__main__":
         required=False,
         help="Optional. Use this Azure Document Intelligence account key instead of the current user identity to login (use az login to set current user for Azure)",
     )
+    
+    # ADD NEW BLOB STORAGE ARGUMENTS:
+    parser.add_argument(
+        "--blobstorageaccount",
+        required=False,
+        help="Azure Blob Storage account name to read source documents from"
+    )
+    parser.add_argument(
+        "--blobcontainer",
+        required=False,
+        help="Azure Blob Storage container name to read source documents from"
+    )
+    parser.add_argument(
+        "--blobpathprefix",
+        required=False,
+        help="Optional path prefix within the blob container to limit processing to specific folder"
+    )
+    parser.add_argument(
+        "--blobstoragekey",
+        required=False,
+        help="Optional. Azure Blob Storage account key (if not using managed identity)"
+    )
+    
     parser.add_argument(
         "--searchserviceassignedid",
         required=False,
@@ -388,6 +431,11 @@ if __name__ == "__main__":
         datalake_filesystem=os.getenv("AZURE_ADLS_GEN2_FILESYSTEM"),
         datalake_path=os.getenv("AZURE_ADLS_GEN2_FILESYSTEM_PATH"),
         datalake_key=clean_key_if_exists(args.datalakekey),
+        # Add new blob storage parameters
+        blob_storage_account=args.blobstorageaccount or os.getenv("AZURE_SOURCE_BLOB_STORAGE_ACCOUNT"),
+        blob_container=args.blobcontainer or os.getenv("AZURE_SOURCE_BLOB_CONTAINER"),
+        blob_path_prefix=args.blobpathprefix or os.getenv("AZURE_SOURCE_BLOB_PATH_PREFIX"),
+        blob_storage_key=clean_key_if_exists(args.blobstoragekey),
     )
 
     openai_host = os.environ["OPENAI_HOST"]
@@ -471,3 +519,4 @@ if __name__ == "__main__":
 
     loop.run_until_complete(main(ingestion_strategy, setup_index=not args.remove and not args.removeall))
     loop.close()
+
