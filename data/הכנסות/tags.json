@@ -1,0 +1,9 @@
+{
+  "mosbot/הכנסות/דיווח כרטיסים.pdf":       "category=Income&topic=Tickets&doctype=ticket_report",
+  "mosbot/הכנסות/הוצאת קבלה על שכירות (8).pdf": "category=Income&topic=Rent&doctype=rent_receipt",
+  "mosbot/הכנסות/הפקדות (1).pdf":          "category=Income&topic=Deposits&doctype=deposit_report",
+  "mosbot/הכנסות/מדריך חשבון חיוב קבלה - הכנסות מרכזים + הכנסות פיזיקל (6).pdf":
+                                             "category=Income&topic=Receipts&doctype=invoice_receipt_guide",
+  "mosbot/הכנסות/פרפורמה.pdf":             "category=Income&topic=Proforma&doctype=proforma_invoice",
+  "mosbot/הכנסות/בקשת החזר.pdf":           "category=Income&topic=Refunds&doctype=refund_request"
+}
