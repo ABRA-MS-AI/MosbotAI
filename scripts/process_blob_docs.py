@@ -13,7 +13,6 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent / "app" / "backend"))
 
 from azure.identity.aio import ManagedIdentityCredential
-
 from load_azd_env import load_azd_env
 from prepdocs import (
     main,
