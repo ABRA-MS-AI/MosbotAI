@@ -262,7 +262,7 @@ opentelemetry-instrumentation-dbapi==0.52b1
     # via opentelemetry-instrumentation-psycopg2
 opentelemetry-instrumentation-django==0.52b1
     # via azure-monitor-opentelemetry
-opentelemetry-instrumentation-fastapi==0.57b0
+opentelemetry-instrumentation-fastapi==0.52b1
     # via azure-monitor-opentelemetry
 opentelemetry-instrumentation-flask==0.52b1
     # via azure-monitor-opentelemetry
@@ -454,5 +454,6 @@ yarl==1.17.2
     # via aiohttp
 zipp==3.21.0
     # via importlib-metadata
+
 
 
