@@ -3,11 +3,11 @@
 Script to process documents from blob storage
 Run this via GitHub Actions or Azure Container Jobs
 """
-import os
 import asyncio
 import logging
-from pathlib import Path
+import os
 import sys
+from pathlib import Path
 
 # Add the backend to the Python path
 sys.path.append(str(Path(__file__).parent.parent / "app" / "backend"))
