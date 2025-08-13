@@ -1,0 +1,51 @@
+name: Process Documents from Blob Storage
+
+on:
+  workflow_dispatch:  # Manual trigger
+    inputs:
+      source_container:
+        description: 'Source blob container name'
+        required: true
+        default: 'documents'
+      path_prefix:
+        description: 'Path prefix (optional)'
+        required: false
+        default: ''
+
+jobs:
+  process-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        cd app/backend
+        pip install -r requirements.txt
+    
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
+    - name: Process Documents
+      env:
+        AZURE_SOURCE_BLOB_STORAGE_ACCOUNT: ${{ vars.AZURE_SOURCE_BLOB_STORAGE_ACCOUNT }}
+        AZURE_SOURCE_BLOB_CONTAINER: ${{ github.event.inputs.source_container }}
+        AZURE_SOURCE_BLOB_PATH_PREFIX: ${{ github.event.inputs.path_prefix }}
+        AZURE_STORAGE_ACCOUNT: ${{ vars.AZURE_STORAGE_ACCOUNT }}
+        AZURE_STORAGE_CONTAINER: ${{ vars.AZURE_STORAGE_CONTAINER }}
+        AZURE_SEARCH_SERVICE: ${{ vars.AZURE_SEARCH_SERVICE }}
+        AZURE_SEARCH_INDEX: ${{ vars.AZURE_SEARCH_INDEX }}
+        # Add other required environment variables from your azd env
+      run: |
+        cd scripts
+        python process_blob_docs.py
