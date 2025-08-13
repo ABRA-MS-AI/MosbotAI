@@ -1,4 +1,3 @@
-
 import argparse
 import asyncio
 import logging
@@ -11,8 +10,8 @@ from azure.identity.aio import AzureDeveloperCliCredential, get_bearer_token_pro
 from rich.logging import RichHandler
 
 from load_azd_env import load_azd_env
+from prepdocslib.bloblistfilestrategy import BlobListFileStrategy
 from prepdocslib.blobmanager import BlobManager
-from prepdocslib.bloblistfilestrategy import BlobListFileStrategy  # ADD THIS IMPORT
 from prepdocslib.csvparser import CsvParser
 from prepdocslib.embeddings import (
     AzureOpenAIEmbeddingService,
@@ -22,9 +21,7 @@ from prepdocslib.embeddings import (
 from prepdocslib.fileprocessor import FileProcessor
 from prepdocslib.filestrategy import FileStrategy
 from prepdocslib.htmlparser import LocalHTMLParser
-from prepdocslib.integratedvectorizerstrategy import (
-    IntegratedVectorizerStrategy,
-)
+from prepdocslib.integratedvectorizerstrategy import IntegratedVectorizerStrategy
 from prepdocslib.jsonparser import JsonParser
 from prepdocslib.listfilestrategy import (
     ADLSGen2ListFileStrategy,
@@ -520,5 +517,6 @@ if __name__ == "__main__":
 
     loop.run_until_complete(main(ingestion_strategy, setup_index=not args.remove and not args.removeall))
     loop.close()
+
 
 

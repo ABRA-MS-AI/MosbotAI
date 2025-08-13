@@ -40,4 +40,5 @@ except ImportError as e:
     sys.exit(1)
 except Exception as e:
     print(f"Error starting server: {e}")
+
     sys.exit(1)

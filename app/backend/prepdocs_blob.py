@@ -15,13 +15,13 @@ from rich.logging import RichHandler
 from load_azd_env import load_azd_env
 from prepdocs import (
     clean_key_if_exists,
-    setup_search_info,
+    main,
     setup_blob_manager,
-    setup_list_file_strategy,
     setup_embeddings_service,
     setup_file_processors,
     setup_image_embeddings_service,
-    main
+    setup_list_file_strategy,
+    setup_search_info,
 )
 from prepdocslib.filestrategy import FileStrategy
 from prepdocslib.integratedvectorizerstrategy import IntegratedVectorizerStrategy
