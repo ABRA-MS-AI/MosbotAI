@@ -1,12 +1,10 @@
 # prepdocslib/bloblistfilestrategy.py - Fixed implementation with proper cleanup
 
-import hashlib
 import logging
 import os
 import tempfile
 from collections.abc import AsyncGenerator
 from typing import Union
-from datetime import datetime, timezone
 
 from azure.core.credentials_async import AsyncTokenCredential
 from azure.storage.blob.aio import BlobServiceClient
