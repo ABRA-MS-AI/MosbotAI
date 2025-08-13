@@ -125,6 +125,6 @@ class BlobListFileStrategy(ListFileStrategy):
                     if temp_file_path and os.path.exists(temp_file_path):
                         try:
                             os.remove(temp_file_path)
-                        except:
+                        except Exception:  # Specify the exception type
                             pass
                     continue
