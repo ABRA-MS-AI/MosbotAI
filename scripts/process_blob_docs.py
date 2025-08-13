@@ -12,7 +12,6 @@ from pathlib import Path
 # Add the backend to the Python path
 sys.path.append(str(Path(__file__).parent.parent / "app" / "backend"))
 
-from azure.identity.aio import ManagedIdentityCredential
 from load_azd_env import load_azd_env
 from prepdocs import (
     main,
@@ -24,6 +23,8 @@ from prepdocs import (
 )
 from prepdocslib.filestrategy import FileStrategy
 from prepdocslib.strategy import DocumentAction
+
+from azure.identity.aio import ManagedIdentityCredential
 
 async def process_documents_from_blob():
     """Process documents from your source blob storage"""
