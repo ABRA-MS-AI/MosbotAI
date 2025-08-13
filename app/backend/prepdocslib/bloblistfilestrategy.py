@@ -1,3 +1,5 @@
+# prepdocslib/bloblistfilestrategy.py - Fixed implementation
+
 import hashlib
 import logging
 import os
@@ -16,7 +18,7 @@ logger = logging.getLogger("scripts")
 
 class BlobListFileStrategy(ListFileStrategy):
     """
-    Concrete strategy for listing files that are located in Azure Blob Storage
+    Concrete strategy for listing files that are located in Azure Blob Storage (non-HNS)
     """
 
     def __init__(
@@ -53,7 +55,7 @@ class BlobListFileStrategy(ListFileStrategy):
                         yield blob.name
 
     async def list(self) -> AsyncGenerator[File, None]:
-        """List files with change detection based on blob last modified time"""
+        """List files for processing"""
         async with BlobServiceClient(
             account_url=self.endpoint, credential=self.credential
         ) as service_client:
@@ -62,12 +64,6 @@ class BlobListFileStrategy(ListFileStrategy):
             async for blob_name in self.list_paths():
                 try:
                     blob_client = container_client.get_blob_client(blob_name)
-                    blob_properties = await blob_client.get_blob_properties()
-                    
-                    # Check if file has changed using last modified time
-                    if not await self._has_blob_changed(blob_client, blob_properties):
-                        logger.info(f"Skipping {blob_name}, no changes detected.")
-                        continue
                     
                     # Download blob to temporary file
                     temp_file_path = os.path.join(tempfile.gettempdir(), os.path.basename(blob_name))
@@ -88,67 +84,4 @@ class BlobListFileStrategy(ListFileStrategy):
                     
                 except Exception as e:
                     logger.error(f"Error processing blob {blob_name}: {e}")
-                    continue
-
-    async def _has_blob_changed(self, blob_client, blob_properties) -> bool:
-        """
-        Check if blob has changed by comparing last modified time
-        with stored timestamp in a metadata file
-        """
-        blob_name = blob_client.blob_name
-        timestamp_file = os.path.join(tempfile.gettempdir(), f"{blob_name.replace('/', '_')}.timestamp")
-        
-        current_modified = blob_properties.last_modified
-        
-        # If timestamp file doesn't exist, consider it changed
-        if not os.path.exists(timestamp_file):
-            await self._store_blob_timestamp(timestamp_file, current_modified)
-            return True
-        
-        # Read stored timestamp
-        try:
-            with open(timestamp_file, 'r') as f:
-                stored_timestamp_str = f.read().strip()
-                stored_timestamp = datetime.fromisoformat(stored_timestamp_str)
-                
-            # Compare timestamps
-            if current_modified > stored_timestamp:
-                await self._store_blob_timestamp(timestamp_file, current_modified)
-                return True
-            else:
-                return False
-                
-        except Exception as e:
-            logger.warning(f"Error reading timestamp file for {blob_name}: {e}")
-            await self._store_blob_timestamp(timestamp_file, current_modified)
-            return True
-
-    async def _store_blob_timestamp(self, timestamp_file: str, timestamp: datetime):
-        """Store the blob's last modified timestamp"""
-        try:
-            with open(timestamp_file, 'w') as f:
-                f.write(timestamp.isoformat())
-        except Exception as e:
-            logger.error(f"Error storing timestamp: {e}")
-
-    async def list_changed_blobs_since(self, since_datetime: datetime) -> AsyncGenerator[str, None]:
-        """
-        List only blobs that have changed since a specific datetime.
-        Useful for daily incremental updates.
-        """
-        async with BlobServiceClient(
-            account_url=self.endpoint, credential=self.credential
-        ) as service_client:
-            container_client = service_client.get_container_client(self.container_name)
-            
-            async for blob_name in self.list_paths():
-                try:
-                    blob_client = container_client.get_blob_client(blob_name)
-                    blob_properties = await blob_client.get_blob_properties()
-                    
-                    if blob_properties.last_modified > since_datetime:
-                        yield blob_name
-                        
-                except Exception as e:
-                    logger.error(f"Error checking blob {blob_name}: {e}")
                     continue
