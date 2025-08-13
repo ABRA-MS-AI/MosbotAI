@@ -2,6 +2,7 @@
 import os
 import sys
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Load environment variables from .env.local if it exists
@@ -42,3 +43,4 @@ except Exception as e:
     print(f"Error starting server: {e}")
 
     sys.exit(1)
+
