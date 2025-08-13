@@ -33,17 +33,11 @@
       "value": "${AZURE_COMPUTER_VISION_RESOURCE_GROUP}"
     },
     "computerVisionResourceGroupLocation": {
-<<<<<<< HEAD
-      "value": "${AZURE_COMPUTER_VISION_LOCATION}"
-    },
-    "computerVisionSkuName": {
-      "value": "${AZURE_COMPUTER_VISION_SKU}"
-=======
+
       "value": "${AZURE_COMPUTER_VISION_LOCATION=eastus}"
     },
     "computerVisionSkuName": {
       "value": "${AZURE_COMPUTER_VISION_SKU=S1}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "contentUnderstandingServiceName": {
       "value": "${AZURE_CONTENT_UNDERSTANDING_SERVICE}"
@@ -58,21 +52,15 @@
       "value": "${AZURE_DOCUMENTINTELLIGENCE_RESOURCE_GROUP}"
     },
     "documentIntelligenceSkuName": {
-<<<<<<< HEAD
-      "value": "${AZURE_DOCUMENTINTELLIGENCE_SKU}"
-=======
+
       "value": "${AZURE_DOCUMENTINTELLIGENCE_SKU=S0}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "documentIntelligenceResourceGroupLocation": {
       "value": "${AZURE_DOCUMENTINTELLIGENCE_LOCATION}"
     },
     "searchIndexName": {
-<<<<<<< HEAD
-      "value": "${AZURE_SEARCH_INDEX}"
-=======
+
       "value": "${AZURE_SEARCH_INDEX=gptkbindex}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "searchServiceName": {
       "value": "${AZURE_SEARCH_SERVICE}"
@@ -84,37 +72,17 @@
       "value": "${AZURE_SEARCH_SERVICE_LOCATION}"
     },
     "searchServiceSkuName": {
-<<<<<<< HEAD
-      "value": "${AZURE_SEARCH_SERVICE_SKU}"
-    },
-    "searchQueryLanguage": {
-      "value": "${AZURE_SEARCH_QUERY_LANGUAGE}"
-    },
-    "searchQuerySpeller": {
-      "value": "${AZURE_SEARCH_QUERY_SPELLER}"
-    },
-    "searchServiceSemanticRankerLevel": {
-      "value": "${AZURE_SEARCH_SEMANTIC_RANKER}"
-    },
-    "searchServiceQueryRewriting": {
-      "value": "${AZURE_SEARCH_QUERY_REWRITING}"
-    },
-    "searchFieldNameEmbedding": {
-      "value": "${AZURE_SEARCH_FIELD_NAME_EMBEDDING}"
-    },
-    "defaultReasoningEffort": {
-      "value": "${AZURE_OPENAI_REASONING_EFFORT}"
-=======
+
       "value": "${AZURE_SEARCH_SERVICE_SKU=basic}"
     },
     "searchQueryLanguage": {
-      "value": "${AZURE_SEARCH_QUERY_LANGUAGE=en-us}"
+      "value": "${AZURE_SEARCH_QUERY_LANGUAGE=he-il}"
     },
     "searchQuerySpeller": {
       "value": "${AZURE_SEARCH_QUERY_SPELLER=lexicon}"
     },
     "searchServiceSemanticRankerLevel": {
-      "value": "${AZURE_SEARCH_SEMANTIC_RANKER=free}"
+      "value": "${AZURE_SEARCH_SEMANTIC_RANKER=standard}"
     },
     "searchServiceQueryRewriting": {
       "value": "${AZURE_SEARCH_QUERY_REWRITING=false}"
@@ -124,7 +92,6 @@
     },
     "defaultReasoningEffort": {
       "value": "${AZURE_OPENAI_REASONING_EFFORT=medium}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "storageAccountName": {
       "value": "${AZURE_STORAGE_ACCOUNT}"
@@ -133,21 +100,15 @@
       "value": "${AZURE_STORAGE_RESOURCE_GROUP}"
     },
     "storageSkuName": {
-<<<<<<< HEAD
-      "value": "${AZURE_STORAGE_SKU}"
-=======
+
       "value": "${AZURE_STORAGE_SKU=Standard_LRS}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "appServicePlanName": {
       "value": "${AZURE_APP_SERVICE_PLAN}"
     },
     "appServiceSkuName": {
-<<<<<<< HEAD
-      "value": "${AZURE_APP_SERVICE_SKU}"
-=======
+
       "value": "${AZURE_APP_SERVICE_SKU=B1}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "backendServiceName": {
       "value": "${AZURE_APP_SERVICE}"
@@ -231,11 +192,8 @@
       "value": "${AZURE_OPENAI_SEARCHAGENT_DEPLOYMENT_CAPACITY}"
     },
     "openAiHost": {
-<<<<<<< HEAD
-      "value": "${OPENAI_HOST}"
-=======
+
       "value": "${OPENAI_HOST=azure}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "azureOpenAiCustomUrl":{
       "value": "${AZURE_OPENAI_CUSTOM_URL}"
@@ -247,11 +205,8 @@
       "value": "${AZURE_OPENAI_API_KEY_OVERRIDE}"
     },
     "azureOpenAiDisableKeys": {
-<<<<<<< HEAD
-      "value": "${AZURE_OPENAI_DISABLE_KEYS}"
-=======
+
       "value": "${AZURE_OPENAI_DISABLE_KEYS=true}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "openAiApiKey": {
       "value": "${OPENAI_API_KEY}"
@@ -260,11 +215,8 @@
       "value": "${OPENAI_ORGANIZATION}"
     },
     "useApplicationInsights": {
-<<<<<<< HEAD
-      "value": "${AZURE_USE_APPLICATION_INSIGHTS}"
-=======
+
       "value": "${AZURE_USE_APPLICATION_INSIGHTS=true}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "applicationInsightsName": {
       "value": "${AZURE_APPLICATION_INSIGHTS}"
@@ -276,27 +228,7 @@
       "value": "${AZURE_LOG_ANALYTICS}"
     },
     "useVectors": {
-<<<<<<< HEAD
-      "value": "${USE_VECTORS}"
-    },
-    "useGPT4V": {
-      "value": "${USE_GPT4V}"
-    },
-    "useEval": {
-      "value": "${USE_EVAL}"
-    },
-    "enableLanguagePicker": {
-      "value": "${ENABLE_LANGUAGE_PICKER}"
-    },
-    "useSpeechInputBrowser": {
-      "value": "${USE_SPEECH_INPUT_BROWSER}"
-    },
-    "useSpeechOutputBrowser": {
-      "value": "${USE_SPEECH_OUTPUT_BROWSER}"
-    },
-    "useSpeechOutputAzure": {
-      "value": "${USE_SPEECH_OUTPUT_AZURE}"
-=======
+
       "value": "${USE_VECTORS=true}"
     },
     "useGPT4V": {
@@ -316,17 +248,13 @@
     },
     "useSpeechOutputAzure": {
       "value": "${USE_SPEECH_OUTPUT_AZURE=false}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "speechServiceName": {
       "value": "${AZURE_SPEECH_SERVICE}"
     },
     "speechServiceSkuName": {
-<<<<<<< HEAD
-      "value": "${AZURE_SPEECH_SERVICE_SKU}"
-=======
+
       "value": "${AZURE_SPEECH_SERVICE_SKU=S0}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "speechServiceResourceGroupName": {
       "value": "${AZURE_SPEECH_SERVICE_RESOURCE_GROUP}"
@@ -335,23 +263,14 @@
       "value": "${AZURE_SPEECH_SERVICE_LOCATION}"
     },
     "useChatHistoryBrowser": {
-<<<<<<< HEAD
-      "value": "${USE_CHAT_HISTORY_BROWSER}"
+
+      "value": "${USE_CHAT_HISTORY_BROWSER=true}"
     },
     "useChatHistoryCosmos": {
-      "value": "${USE_CHAT_HISTORY_COSMOS}"
-    },
-    "cosmosDbSkuName": {
-      "value": "${AZURE_COSMOSDB_SKU}"
-=======
-      "value": "${USE_CHAT_HISTORY_BROWSER=false}"
-    },
-    "useChatHistoryCosmos": {
-      "value": "${USE_CHAT_HISTORY_COSMOS=false}"
+      "value": "${USE_CHAT_HISTORY_COSMOS=true}"
     },
     "cosmosDbSkuName": {
       "value": "${AZURE_COSMOSDB_SKU=serverless}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "cosmodDbResourceGroupName": {
       "value": "${AZURE_COSMOSDB_RESOURCE_GROUP}"
@@ -369,22 +288,8 @@
       "value": "${AZURE_SPEECH_SERVICE_VOICE}"
     },
     "useAuthentication": {
-<<<<<<< HEAD
-      "value": "${AZURE_USE_AUTHENTICATION}"
-    },
-    "enforceAccessControl": {
-      "value": "${AZURE_ENFORCE_ACCESS_CONTROL}"
-    },
-    "disableAppServicesAuthentication": {
-      "value": "${AZURE_DISABLE_APP_SERVICES_AUTHENTICATION}"
-    },
-    "enableGlobalDocuments": {
-      "value": "${AZURE_ENABLE_GLOBAL_DOCUMENT_ACCESS}"
-    },
-    "enableUnauthenticatedAccess": {
-      "value": "${AZURE_ENABLE_UNAUTHENTICATED_ACCESS}"
-=======
-      "value": "${AZURE_USE_AUTHENTICATION=false}"
+
+      "value": "${AZURE_USE_AUTHENTICATION=true}"
     },
     "enforceAccessControl": {
       "value": "${AZURE_ENFORCE_ACCESS_CONTROL=false}"
@@ -397,7 +302,6 @@
     },
     "enableUnauthenticatedAccess": {
       "value": "${AZURE_ENABLE_UNAUTHENTICATED_ACCESS=false}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "authTenantId": {
       "value": "${AZURE_AUTH_TENANT_ID}"
@@ -418,18 +322,7 @@
       "value": "${ALLOWED_ORIGIN}"
     },
     "publicNetworkAccess": {
-<<<<<<< HEAD
-      "value": "${AZURE_PUBLIC_NETWORK_ACCESS}"
-    },
-    "usePrivateEndpoint": {
-      "value": "${AZURE_USE_PRIVATE_ENDPOINT}"
-    },
-    "useVpnGateway": {
-      "value": "${AZURE_USE_VPN_GATEWAY}"
-    },
-    "bypass": {
-      "value": "${AZURE_NETWORK_BYPASS}"
-=======
+
       "value": "${AZURE_PUBLIC_NETWORK_ACCESS=Enabled}"
     },
     "usePrivateEndpoint": {
@@ -440,7 +333,6 @@
     },
     "bypass": {
       "value": "${AZURE_NETWORK_BYPASS=AzureServices}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     },
     "useIntegratedVectorization": {
       "value": "${USE_FEATURE_INT_VECTORIZATION}"
@@ -461,25 +353,8 @@
       "value": "${TF_BUILD}"
     },
     "deploymentTarget": {
-<<<<<<< HEAD
-      "value": "${DEPLOYMENT_TARGET}"
-    },
-    "webAppExists": {
-        "value": "${SERVICE_WEB_RESOURCE_EXISTS}"
-    },
-    "azureContainerAppsWorkloadProfile": {
-      "value": "${AZURE_CONTAINER_APPS_WORKLOAD_PROFILE}"
-    },
-    "useMediaDescriberAzureCU": {
-      "value": "${USE_MEDIA_DESCRIBER_AZURE_CU}"
-    },
-    "useAiProject": {
-      "value": "${USE_AI_PROJECT}"
-    },
-    "useAgenticRetrieval": {
-      "value": "${USE_AGENTIC_RETRIEVAL}"
-=======
-      "value": "${DEPLOYMENT_TARGET=containerapps}"
+
+      "value": "${DEPLOYMENT_TARGET=appservice}"
     },
     "webAppExists": {
         "value": "${SERVICE_WEB_RESOURCE_EXISTS=false}"
@@ -495,7 +370,6 @@
     },
     "useAgenticRetrieval": {
       "value": "${USE_AGENTIC_RETRIEVAL=false}"
->>>>>>> b96b186325d8abbbb9dffa86aef574973be8dd77
     }
   }
 }
