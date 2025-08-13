@@ -164,7 +164,14 @@ jobs:
           AZURE_SERVER_APP_SECRET: ${{ secrets.AZURE_SERVER_APP_SECRET }}
           AZURE_CLIENT_APP_SECRET: ${{ secrets.AZURE_CLIENT_APP_SECRET }}
 
+      - name: Fix Python import sorting
+        run: |
+          pip install ruff
+          ruff check . --fix --select=I --unsafe-fixes
+        continue-on-error: true
+        
       - name: Deploy Application
         run: azd deploy --no-prompt
+
 
 
