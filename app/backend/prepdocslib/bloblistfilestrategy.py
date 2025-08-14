@@ -41,7 +41,7 @@ class BlobListFileStrategy(ListFileStrategy):
         storage_account: str,
         container_name: str,
         blob_path_prefix: str = "",
-        credential: Union[AsyncTokenCredential, str] = None,
+        credential: Optional[Union[AsyncTokenCredential, str]] = None,
     ):
         self.storage_account = storage_account
         self.container_name = container_name
