@@ -1,0 +1,40 @@
+name: Fix Submodule Issue
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-submodule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Remove MosbotAI submodule
+        run: |
+          # Configure git
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Remove submodule entry from git index
+          git rm --cached MosbotAI || echo "Not in index"
+          
+          # Remove the actual directory
+          rm -rf MosbotAI
+          
+          # Remove any .gitmodules file if it exists
+          rm -f .gitmodules
+          
+          # Clean up git submodule config
+          rm -rf .git/modules/MosbotAI
+          
+          # Commit changes
+          git add -A
+          git commit -m "Remove broken MosbotAI submodule" || echo "No changes to commit"
+          git push
