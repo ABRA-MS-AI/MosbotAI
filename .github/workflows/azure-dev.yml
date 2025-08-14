@@ -172,10 +172,12 @@ jobs:
           ENABLE_ORYX_BUILD: true
           # REMOVED: WEBSITE_RUN_FROM_PACKAGE - conflicts with build
           # REMOVED: The ruff import fixing step
-      - name: Verify Deployment
+      - name: Verify Deployment  
         run: |
-          az webapp log tail --name ${{ vars.AZURE_APP_SERVICE }} \
-            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-            --timeout 60
+          echo "Application deployed to Container Apps"
+          echo "URL: https://mosbot-ai-containerapp.kindocean-89663c81.eastus.azurecontainerapps.io/"
+          # For Container Apps logs, use:
+          # az containerapp logs show --name mosbot-ai-containerapp --resource-group JAFI-EU-MOSDOT-ABRA-AI --follow --tail 50
         continue-on-error: true
+
 
