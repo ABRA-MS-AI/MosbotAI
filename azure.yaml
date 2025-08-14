@@ -6,36 +6,17 @@ services:
   backend:
     project: ./app/backend
     language: py
-    host: appservice  # Keep this
-    # REMOVE the docker section completely for App Service
-    # docker:
-    #   remoteBuild: true
+    host: containerapp
+    docker:
+      remoteBuild: true
     hooks:
-      prepackage:
+      prebuild:  # ← Use prebuild for Container Apps (not prepackage)
         windows:
           shell: pwsh
-          run: |
-            cd ../frontend
-            npm install
-            npm run build
-            cd ../backend
-            # Ensure approaches folder exists
-            if (!(Test-Path "approaches")) { 
-              Write-Error "approaches folder missing!" 
-              exit 1
-            }
+          run: cd ../frontend;npm install;npm run build
         posix:
           shell: sh
-          run: |
-            cd ../frontend
-            npm install
-            npm run build
-            cd ../backend
-            # Ensure approaches folder exists
-            if [ ! -d "approaches" ]; then 
-              echo "Error: approaches folder missing!"
-              exit 1
-            fi
+          run: cd ../frontend;npm install;npm run build
 pipeline:
   variables:
       - AZURE_OPENAI_SERVICE
