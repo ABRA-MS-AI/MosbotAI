@@ -4,7 +4,7 @@ import logging
 import os
 import tempfile
 from collections.abc import AsyncGenerator
-from typing import Union
+from typing import Optional, Union
 
 from azure.core.credentials_async import AsyncTokenCredential
 from azure.storage.blob.aio import BlobServiceClient
