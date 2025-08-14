@@ -1,0 +1,30 @@
+name: Fix Authentication Redirect URI
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  fix-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Update App Registration
+        run: |
+          # Add the new redirect URIs
+          az ad app update --id eb612821-060c-4a43-afcd-3efd5b9c6ade \
+            --web-redirect-uris \
+            "https://mosbot-ai-containerapp.kindocean-89663c81.eastus.azurecontainerapps.io/.auth/login/aad/callback" \
+            "https://mosbot-ai-containerapp.kindocean-89663c81.eastus.azurecontainerapps.io/" \
+            "http://localhost:50505" \
+            "http://localhost:50505/redirect"
+          
+          echo "Redirect URIs updated successfully!"
