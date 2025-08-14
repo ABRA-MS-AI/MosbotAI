@@ -5,13 +5,12 @@ import tempfile
 
 import pytest
 
+from .mocks import MockAzureCredential
 from prepdocslib.listfilestrategy import (
     ADLSGen2ListFileStrategy,
     File,
     LocalListFileStrategy,
 )
-
-from .mocks import MockAzureCredential
 
 
 def test_file_filename():

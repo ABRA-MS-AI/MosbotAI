@@ -5,10 +5,9 @@ from tempfile import NamedTemporaryFile
 import azure.storage.blob.aio
 import pytest
 
+from .mocks import MockAzureCredential
 from prepdocslib.blobmanager import BlobManager
 from prepdocslib.listfilestrategy import File
-
-from .mocks import MockAzureCredential
 
 
 @pytest.fixture

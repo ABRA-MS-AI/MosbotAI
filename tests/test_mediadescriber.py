@@ -4,9 +4,8 @@ import logging
 import aiohttp
 import pytest
 
-from prepdocslib.mediadescriber import ContentUnderstandingDescriber
-
 from .mocks import MockAzureCredential, MockResponse
+from prepdocslib.mediadescriber import ContentUnderstandingDescriber
 
 
 @pytest.mark.asyncio

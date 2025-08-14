@@ -13,18 +13,17 @@ from azure.search.documents.indexes.models import (
 )
 from openai.types.create_embedding_response import Usage
 
-from prepdocslib.embeddings import AzureOpenAIEmbeddingService
-from prepdocslib.listfilestrategy import File
-from prepdocslib.searchmanager import SearchManager, Section
-from prepdocslib.strategy import SearchInfo
-from prepdocslib.textsplitter import SplitPage
-
 from .mocks import (
     MOCK_EMBEDDING_DIMENSIONS,
     MOCK_EMBEDDING_MODEL_NAME,
     MockClient,
     MockEmbeddingsClient,
 )
+from prepdocslib.embeddings import AzureOpenAIEmbeddingService
+from prepdocslib.listfilestrategy import File
+from prepdocslib.searchmanager import SearchManager, Section
+from prepdocslib.strategy import SearchInfo
+from prepdocslib.textsplitter import SplitPage
 
 
 @pytest.fixture

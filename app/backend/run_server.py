@@ -30,11 +30,12 @@ print(f"AZURE_ENABLE_UNAUTHENTICATED_ACCESS = {os.environ.get('AZURE_ENABLE_UNAU
 
 try:
     from main import app
+
     print("App imported successfully")
-    
+
     # Run the server
     app.run(host="localhost", port=50505, debug=True)
-    
+
 except ImportError as e:
     print(f"Import error: {e}")
     print("Missing dependencies. Install with: pip install -r requirements.txt")
@@ -43,4 +44,3 @@ except Exception as e:
     print(f"Error starting server: {e}")
 
     sys.exit(1)
-

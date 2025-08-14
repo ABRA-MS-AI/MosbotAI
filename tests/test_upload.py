@@ -13,9 +13,8 @@ from openai.types.create_embedding_response import (
 )
 from quart.datastructures import FileStorage
 
-from prepdocslib.embeddings import AzureOpenAIEmbeddingService
-
 from .mocks import MockClient, MockEmbeddingsClient
+from prepdocslib.embeddings import AzureOpenAIEmbeddingService
 
 
 # parameterize for directory existing or not

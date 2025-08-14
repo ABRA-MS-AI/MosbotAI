@@ -3,6 +3,7 @@ import os
 import pytest
 from azure.search.documents.aio import SearchClient
 
+from .mocks import MockAzureCredential
 from prepdocslib.blobmanager import BlobManager
 from prepdocslib.fileprocessor import FileProcessor
 from prepdocslib.filestrategy import FileStrategy
@@ -12,8 +13,6 @@ from prepdocslib.listfilestrategy import (
 from prepdocslib.strategy import SearchInfo
 from prepdocslib.textparser import TextParser
 from prepdocslib.textsplitter import SimpleTextSplitter
-
-from .mocks import MockAzureCredential
 
 
 @pytest.mark.asyncio

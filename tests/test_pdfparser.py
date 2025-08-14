@@ -21,10 +21,9 @@ from azure.ai.documentintelligence.models import (
 from azure.core.exceptions import HttpResponseError
 from PIL import Image, ImageChops
 
+from .mocks import MockAzureCredential
 from prepdocslib.mediadescriber import ContentUnderstandingDescriber
 from prepdocslib.pdfparser import DocumentAnalysisParser
-
-from .mocks import MockAzureCredential
 
 TEST_DATA_DIR = pathlib.Path(__file__).parent / "test-data"
 

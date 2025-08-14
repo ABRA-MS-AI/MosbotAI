@@ -110,10 +110,12 @@ def setup_list_file_strategy(
     blob_storage_key: Union[str, None] = None,
 ):
     list_file_strategy: ListFileStrategy
-    
+
     # Check for blob storage first (your new implementation)
     if blob_storage_account and blob_container:
-        blob_creds: Union[AsyncTokenCredential, str] = azure_credential if blob_storage_key is None else blob_storage_key
+        blob_creds: Union[AsyncTokenCredential, str] = (
+            azure_credential if blob_storage_key is None else blob_storage_key
+        )
         logger.info("Using Azure Blob Storage Account: %s, Container: %s", blob_storage_account, blob_container)
         list_file_strategy = BlobListFileStrategy(
             storage_account=blob_storage_account,
@@ -139,7 +141,7 @@ def setup_list_file_strategy(
         list_file_strategy = LocalListFileStrategy(path_pattern=local_files)
     else:
         raise ValueError("Either local_files, datalake_storage_account, or blob_storage_account must be provided.")
-    
+
     return list_file_strategy
 
 
@@ -324,29 +326,25 @@ if __name__ == "__main__":
         required=False,
         help="Optional. Use this Azure Document Intelligence account key instead of the current user identity to login (use az login to set current user for Azure)",
     )
-    
+
     # ADD NEW BLOB STORAGE ARGUMENTS:
     parser.add_argument(
-        "--blobstorageaccount",
-        required=False,
-        help="Azure Blob Storage account name to read source documents from"
+        "--blobstorageaccount", required=False, help="Azure Blob Storage account name to read source documents from"
     )
     parser.add_argument(
-        "--blobcontainer",
-        required=False,
-        help="Azure Blob Storage container name to read source documents from"
+        "--blobcontainer", required=False, help="Azure Blob Storage container name to read source documents from"
     )
     parser.add_argument(
         "--blobpathprefix",
         required=False,
-        help="Optional path prefix within the blob container to limit processing to specific folder"
+        help="Optional path prefix within the blob container to limit processing to specific folder",
     )
     parser.add_argument(
         "--blobstoragekey",
         required=False,
-        help="Optional. Azure Blob Storage account key (if not using managed identity)"
+        help="Optional. Azure Blob Storage account key (if not using managed identity)",
     )
-    
+
     parser.add_argument(
         "--searchserviceassignedid",
         required=False,
@@ -517,6 +515,3 @@ if __name__ == "__main__":
 
     loop.run_until_complete(main(ingestion_strategy, setup_index=not args.remove and not args.removeall))
     loop.close()
-
-
-
