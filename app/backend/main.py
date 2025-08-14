@@ -1,4 +1,8 @@
 import os
+import sys
+
+# Fix the import path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from app import create_app
 from load_azd_env import load_azd_env

@@ -4,7 +4,7 @@ import logging
 import os
 import tempfile
 from collections.abc import AsyncGenerator
-from typing import Union
+from typing import Optional, Union
 
 from azure.core.credentials_async import AsyncTokenCredential
 from azure.storage.blob.aio import BlobServiceClient
@@ -41,7 +41,7 @@ class BlobListFileStrategy(ListFileStrategy):
         storage_account: str,
         container_name: str,
         blob_path_prefix: str = "",
-        credential: Union[AsyncTokenCredential, str] = None,
+        credential: Optional[Union[AsyncTokenCredential, str]] = None,
     ):
         self.storage_account = storage_account
         self.container_name = container_name
