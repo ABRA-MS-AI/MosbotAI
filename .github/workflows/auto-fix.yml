@@ -1,0 +1,45 @@
+name: Auto-fix code issues
+
+on:
+  workflow_dispatch:  # Manual trigger
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  auto-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Auto-fix all Python issues
+        run: |
+          pip install ruff black
+          
+          # Fix import sorting
+          ruff check . --fix --select=I --unsafe-fixes || true
+          
+          # Fix formatting
+          black . || true
+          
+          # Configure git
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Commit if there are changes
+          if [[ -n $(git status -s) ]]; then
+            git add -A
+            git commit -m "Auto-fix: Code formatting and imports"
+            git push
+          else
+            echo "No changes needed"
+          fi
