@@ -6,7 +6,7 @@ services:
   backend:
     project: ./app/backend
     language: py
-    host: containerapps
+    host: containerapp
     docker:
       remoteBuild: true
     hooks:
