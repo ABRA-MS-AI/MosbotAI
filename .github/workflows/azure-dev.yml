@@ -172,6 +172,9 @@ jobs:
         
       - name: Deploy Application
         run: azd deploy --no-prompt
-
-
+        env:
+          WEBSITE_ENABLE_APP_CACHE: true
+          SCM_DO_BUILD_DURING_DEPLOYMENT: true
+          ENABLE_ORYX_BUILD: true
+          WEBSITE_RUN_FROM_PACKAGE: 1
 
