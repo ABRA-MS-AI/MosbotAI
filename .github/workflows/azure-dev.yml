@@ -156,7 +156,14 @@ jobs:
           AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
           AZURE_SERVER_APP_SECRET: ${{ secrets.AZURE_SERVER_APP_SECRET }}
           AZURE_CLIENT_APP_SECRET: ${{ secrets.AZURE_CLIENT_APP_SECRET }}
-        
+      - name: Verify App Structure
+        run: |
+          echo "Checking app/backend structure..."
+          ls -la app/backend/
+          echo "Checking for approaches folder..."
+          ls -la app/backend/approaches/ || echo "ERROR: approaches folder missing!"
+          echo "Checking for other critical folders..."
+          ls -la app/backend/core/ || echo "ERROR: core folder missing!"        
       - name: Deploy Application
         run: azd deploy --no-prompt
         env:
@@ -165,3 +172,4 @@ jobs:
           ENABLE_ORYX_BUILD: true
           # REMOVED: WEBSITE_RUN_FROM_PACKAGE - conflicts with build
           # REMOVED: The ruff import fixing step
+
