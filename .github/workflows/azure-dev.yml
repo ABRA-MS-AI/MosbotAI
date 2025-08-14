@@ -172,4 +172,10 @@ jobs:
           ENABLE_ORYX_BUILD: true
           # REMOVED: WEBSITE_RUN_FROM_PACKAGE - conflicts with build
           # REMOVED: The ruff import fixing step
+      - name: Verify Deployment
+        run: |
+          az webapp log tail --name ${{ vars.AZURE_APP_SERVICE }} \
+            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
+            --timeout 60
+        continue-on-error: true
 
