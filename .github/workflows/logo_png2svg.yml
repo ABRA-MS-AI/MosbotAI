@@ -1,0 +1,50 @@
+name: Switch Logo from SVG to PNG
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  switch-to-png:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Replace all SVG references with PNG
+        run: |
+          # 1. Update Layout.tsx - change import
+          sed -i 's|import logo from "../../assets/images/logo.svg"|import logo from "../../assets/images/mosbot-logo.png"|g' app/frontend/src/pages/layout/Layout.tsx
+          
+          # 2. Update index.html - change favicon link
+          sed -i 's|href="/src/assets/images/logo.svg"|href="/src/assets/images/mosbot-logo.png"|g' app/frontend/index.html
+          sed -i 's|type="image/png"|type="image/png"|g' app/frontend/index.html
+          
+          # 3. Check if applogo.svg is used and replace it
+          if grep -q "applogo.svg" app/frontend/src/pages/chat/Chat.tsx; then
+            sed -i 's|import appLogo from "../../assets/applogo.svg"|import appLogo from "../../assets/images/logo.png"|g' app/frontend/src/pages/chat/Chat.tsx
+          fi
+          
+          # 4. Update any other SVG references in the frontend
+          find app/frontend/src -type f \( -name "*.tsx" -o -name "*.ts" -o -name "*.jsx" -o -name "*.js" \) -exec sed -i 's|logo\.svg|logo.png|g' {} \;
+          
+          # 5. Also update the title to Mosbot
+          sed -i 's|{t("headerTitle")}|מוסבוט|g' app/frontend/src/pages/layout/Layout.tsx
+          sed -i 's| AI חכם | מוסבוט - עוזר AI חכם|g' app/frontend/index.html
+          
+          # 6. Update Chat empty state titles
+          sed -i 's|{t("chatEmptyStateTitle")}|"ברוכים הבאים למוסבוט"|g' app/frontend/src/pages/chat/Chat.tsx
+          sed -i 's|{t("chatEmptyStateSubtitle")}|"שאל אותי כל דבר או נסה דוגמה"|g' app/frontend/src/pages/chat/Chat.tsx
+          
+          # Show what was changed
+          echo "=== Files that were updated ==="
+          git diff --name-only
+          
+          # Commit changes
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m "Switch from SVG to PNG logo and update to Mosbot branding"
+          git push
