@@ -1,0 +1,48 @@
+name: Check App Configuration
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Check Container App Logs
+        run: |
+          echo "=== Recent Container Logs ==="
+          az containerapp logs show \
+            --name mosbot-ai-containerapp \
+            --resource-group JAFI-EU-MOSDOT-ABRA-AI \
+            --tail 50 || echo "Could not fetch logs"
+      
+      - name: Check Search Index
+        run: |
+          echo "=== Checking Search Index ==="
+          az search query-index \
+            --service-name mosbot-ai-search \
+            --resource-group JAFI-EU-MOSDOT-ABRA-AI \
+            --index-name gptkbindex \
+            --query-string "*" \
+            --count true \
+            --top 1 || echo "Search index might be empty or misconfigured"
+      
+      - name: Check Container App Environment Variables
+        run: |
+          echo "=== Checking Key Environment Variables ==="
+          az containerapp show \
+            --name mosbot-ai-containerapp \
+            --resource-group JAFI-EU-MOSDOT-ABRA-AI \
+            --query "properties.configuration.secrets[].name" -o tsv
