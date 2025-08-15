@@ -185,72 +185,82 @@ class Approach(ABC):
             filters.append(security_filter)
         return None if len(filters) == 0 else " and ".join(filters)
 
-    async def search(
-        self,
-        top: int,
-        query_text: Optional[str],
-        filter: Optional[str],
-        vectors: list[VectorQuery],
-        use_text_search: bool,
-        use_vector_search: bool,
-        use_semantic_ranker: bool,
-        use_semantic_captions: bool,
-        minimum_search_score: Optional[float] = None,
-        minimum_reranker_score: Optional[float] = None,
-        use_query_rewriting: Optional[bool] = None,
-    ) -> list[Document]:
+async def search(
+    self,
+    top: int,
+    query_text: Optional[str],
+    filter: Optional[str],
+    vectors: list[VectorQuery],
+    use_text_search: bool,
+    use_vector_search: bool,
+    use_semantic_ranker: bool,
+    use_semantic_captions: bool,
+    minimum_search_score: Optional[float] = None,
+    minimum_reranker_score: Optional[float] = None,
+    use_query_rewriting: Optional[bool] = None,
+) -> list[Document]:
+    # Add fuzzy matching for Hebrew - allow 2 character edits
+    if query_text and use_text_search:
+        # Add fuzzy matching to each word
+        words = query_text.split()
+        fuzzy_words = [f"{word}~2" for word in words if len(word) > 3]  # Only for words > 3 chars
+        search_text = " ".join(fuzzy_words) if fuzzy_words else query_text
+    else:
         search_text = query_text if use_text_search else ""
-        search_vectors = vectors if use_vector_search else []
-        if use_semantic_ranker:
-            results = await self.search_client.search(
-                search_text=search_text,
-                filter=filter,
-                top=top,
-                query_caption="extractive|highlight-false" if use_semantic_captions else None,
-                query_rewrites="generative" if use_query_rewriting else None,
-                vector_queries=search_vectors,
-                query_type=QueryType.SEMANTIC,
-                query_language=self.query_language,
-                query_speller=self.query_speller,
-                semantic_configuration_name="default",
-                semantic_query=query_text,
-            )
-        else:
-            results = await self.search_client.search(
-                search_text=search_text,
-                filter=filter,
-                top=top,
-                vector_queries=search_vectors,
-            )
+    
+    search_vectors = vectors if use_vector_search else []
+    
+    if use_semantic_ranker:
+        results = await self.search_client.search(
+            search_text=search_text,
+            filter=filter,
+            top=top,
+            query_caption="extractive|highlight-false" if use_semantic_captions else None,
+            query_rewrites="generative" if use_query_rewriting else None,
+            vector_queries=search_vectors,
+            query_type=QueryType.FULL,  # Enable Lucene syntax for fuzzy
+            query_language=self.query_language if self.query_language != 'he-il' else None,  # Disable for Hebrew
+            query_speller=None,  # Disable speller for Hebrew
+            semantic_configuration_name="default",
+            semantic_query=query_text,  # Keep original for semantic
+        )
+    else:
+        results = await self.search_client.search(
+            search_text=search_text,
+            filter=filter,
+            top=top,
+            vector_queries=search_vectors,
+            query_type=QueryType.FULL,  # Enable Lucene syntax for fuzzy
+        )
 
-        documents = []
-        async for page in results.by_page():
-            async for document in page:
-                documents.append(
-                    Document(
-                        id=document.get("id"),
-                        content=document.get("content"),
-                        category=document.get("category"),
-                        sourcepage=document.get("sourcepage"),
-                        sourcefile=document.get("sourcefile"),
-                        oids=document.get("oids"),
-                        groups=document.get("groups"),
-                        captions=cast(list[QueryCaptionResult], document.get("@search.captions")),
-                        score=document.get("@search.score"),
-                        reranker_score=document.get("@search.reranker_score"),
-                    )
+    documents = []
+    async for page in results.by_page():
+        async for document in page:
+            documents.append(
+                Document(
+                    id=document.get("id"),
+                    content=document.get("content"),
+                    category=document.get("category"),
+                    sourcepage=document.get("sourcepage"),
+                    sourcefile=document.get("sourcefile"),
+                    oids=document.get("oids"),
+                    groups=document.get("groups"),
+                    captions=cast(list[QueryCaptionResult], document.get("@search.captions")),
+                    score=document.get("@search.score"),
+                    reranker_score=document.get("@search.reranker_score"),
                 )
+            )
 
-            qualified_documents = [
-                doc
-                for doc in documents
-                if (
-                    (doc.score or 0) >= (minimum_search_score or 0)
-                    and (doc.reranker_score or 0) >= (minimum_reranker_score or 0)
-                )
-            ]
+        qualified_documents = [
+            doc
+            for doc in documents
+            if (
+                (doc.score or 0) >= (minimum_search_score or 0)
+                and (doc.reranker_score or 0) >= (minimum_reranker_score or 0)
+            )
+        ]
 
-        return qualified_documents
+    return qualified_documents
 
     async def run_agentic_retrieval(
         self,
@@ -491,3 +501,4 @@ class Approach(ABC):
         context: dict[str, Any] = {},
     ) -> AsyncGenerator[dict[str, Any], None]:
         raise NotImplementedError
+
