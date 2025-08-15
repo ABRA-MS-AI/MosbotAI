@@ -294,3 +294,103 @@
 }
 
 /* ===== END OF MOSBOT FIXES ===== */
+
+/* ===== MOSBOT NEW HEADER LAYOUT ===== */
+
+/* Main container - three sections */
+.headerContainer {
+    display: grid !important;
+    grid-template-columns: 1fr 2fr 1fr !important;
+    align-items: center !important;
+    padding: 0.75rem 2rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Right section - Login button */
+.headerRight {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    padding-right: 0 !important;
+}
+
+/* Center section - Big title */
+.headerCenter {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+/* Left section - Logo */
+.headerLeft {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    padding-left: 0 !important;
+}
+
+/* Big centered title */
+.headerTitleBig {
+    font-size: 36px !important;
+    font-weight: 800 !important;
+    color: white !important;
+    margin: 0 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2) !important;
+    letter-spacing: 2px !important;
+    background: linear-gradient(45deg, #ffffff, #e0e7ff) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* Logo in corner */
+.headerLogoCorner {
+    height: 45px !important;
+    width: auto !important;
+    cursor: pointer !important;
+    transition: transform 0.3s ease !important;
+}
+
+.headerLogoCorner:hover {
+    transform: scale(1.1) !important;
+}
+
+/* Hide all navigation elements */
+.headerNavList,
+.headerNavPageLink,
+.headerNavPageLinkActive,
+.menuToggle,
+.headerTitleContainer,
+nav {
+    display: none !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .headerContainer {
+        grid-template-columns: 80px 1fr 80px !important;
+        padding: 0.5rem 1rem !important;
+    }
+    
+    .headerTitleBig {
+        font-size: 24px !important;
+        letter-spacing: 1px !important;
+    }
+    
+    .headerLogoCorner {
+        height: 35px !important;
+    }
+}
+
+/* Ensure proper RTL alignment */
+[dir="rtl"] .headerRight {
+    justify-content: flex-start !important;
+}
+
+[dir="rtl"] .headerLeft {
+    justify-content: flex-end !important;
+}
+
+/* ===== END MOSBOT LAYOUT ===== */
