@@ -1,0 +1,222 @@
+name: Remove Navigation - Chat Only Mode with New Layout
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  simplify-navigation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create new header layout with corners
+        run: |
+          # Create new Layout.tsx with three-section header
+          cat > app/frontend/src/pages/layout/Layout.tsx << 'EOF'
+          import React from "react";
+          import { Outlet, Link } from "react-router-dom";
+          import styles from "./Layout.module.css";
+          import { useLogin } from "../../authConfig";
+          import { LoginButton } from "../../components/LoginButton";
+          import logo from "../../assets/images/mosbot-logo.png";
+
+          const Layout = () => {
+              return (
+                  <div className={styles.layout}>
+                      <header className={styles.header} role={"banner"}>
+                          <div className={styles.headerContainer}>
+                              {/* Right corner - Login button */}
+                              <div className={styles.headerRight}>
+                                  {useLogin && <LoginButton />}
+                              </div>
+                              
+                              {/* Center - Big Mosbot title */}
+                              <div className={styles.headerCenter}>
+                                  <h1 className={styles.headerTitleBig}>מוסבוט</h1>
+                              </div>
+                              
+                              {/* Left corner - Logo only */}
+                              <div className={styles.headerLeft}>
+                                  <img 
+                                      src={logo} 
+                                      alt="מוסבוט" 
+                                      className={styles.headerLogoCorner}
+                                  />
+                              </div>
+                          </div>
+                      </header>
+                      <Outlet />
+                  </div>
+              );
+          };
+
+          export default Layout;
+          EOF
+          
+          # Update router to redirect everything to chat
+          cat > app/frontend/src/index.tsx << 'EOF'
+          import React from "react";
+          import ReactDOM from "react-dom/client";
+          import { createHashRouter, RouterProvider, Navigate } from "react-router-dom";
+          import { I18nextProvider } from "react-i18next";
+          import { HelmetProvider } from "react-helmet-async";
+          import { initializeIcons } from "@fluentui/react";
+
+          import "./index.css";
+          import Chat from "./pages/chat/Chat";
+          import LayoutWrapper from "./layoutWrapper";
+          import i18next from "./i18n/config";
+
+          initializeIcons();
+
+          document.documentElement.setAttribute('dir', 'rtl');
+          document.documentElement.setAttribute('lang', 'he');
+
+          const router = createHashRouter([
+              {
+                  path: "/",
+                  element: <LayoutWrapper />,
+                  children: [
+                      {
+                          index: true,
+                          element: <Chat />
+                      },
+                      {
+                          path: "qa",
+                          element: <Navigate to="/" replace />
+                      },
+                      {
+                          path: "*",
+                          element: <Navigate to="/" replace />
+                      }
+                  ]
+              }
+          ]);
+
+          ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+              <React.StrictMode>
+                  <I18nextProvider i18n={i18next}>
+                      <HelmetProvider>
+                          <RouterProvider router={router} />
+                      </HelmetProvider>
+                  </I18nextProvider>
+              </React.StrictMode>
+          );
+          EOF
+          
+          # Add new CSS for three-corner layout
+          cat >> app/frontend/src/pages/layout/Layout.module.css << 'EOF'
+          
+          /* ===== MOSBOT NEW HEADER LAYOUT ===== */
+          
+          /* Main container - three sections */
+          .headerContainer {
+              display: grid !important;
+              grid-template-columns: 1fr 2fr 1fr !important;
+              align-items: center !important;
+              padding: 0.75rem 2rem !important;
+              width: 100% !important;
+              max-width: 100% !important;
+          }
+          
+          /* Right section - Login button */
+          .headerRight {
+              display: flex !important;
+              justify-content: flex-start !important;
+              align-items: center !important;
+              padding-right: 0 !important;
+          }
+          
+          /* Center section - Big title */
+          .headerCenter {
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+              text-align: center !important;
+          }
+          
+          /* Left section - Logo */
+          .headerLeft {
+              display: flex !important;
+              justify-content: flex-end !important;
+              align-items: center !important;
+              padding-left: 0 !important;
+          }
+          
+          /* Big centered title */
+          .headerTitleBig {
+              font-size: 36px !important;
+              font-weight: 800 !important;
+              color: white !important;
+              margin: 0 !important;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2) !important;
+              letter-spacing: 2px !important;
+              background: linear-gradient(45deg, #ffffff, #e0e7ff) !important;
+              background-clip: text !important;
+              -webkit-background-clip: text !important;
+              -webkit-text-fill-color: transparent !important;
+          }
+          
+          /* Logo in corner */
+          .headerLogoCorner {
+              height: 45px !important;
+              width: auto !important;
+              cursor: pointer !important;
+              transition: transform 0.3s ease !important;
+          }
+          
+          .headerLogoCorner:hover {
+              transform: scale(1.1) !important;
+          }
+          
+          /* Hide all navigation elements */
+          .headerNavList,
+          .headerNavPageLink,
+          .headerNavPageLinkActive,
+          .menuToggle,
+          .headerTitleContainer,
+          nav {
+              display: none !important;
+          }
+          
+          /* Mobile responsive */
+          @media (max-width: 768px) {
+              .headerContainer {
+                  grid-template-columns: 80px 1fr 80px !important;
+                  padding: 0.5rem 1rem !important;
+              }
+              
+              .headerTitleBig {
+                  font-size: 24px !important;
+                  letter-spacing: 1px !important;
+              }
+              
+              .headerLogoCorner {
+                  height: 35px !important;
+              }
+          }
+          
+          /* Ensure proper RTL alignment */
+          [dir="rtl"] .headerRight {
+              justify-content: flex-start !important;
+          }
+          
+          [dir="rtl"] .headerLeft {
+              justify-content: flex-end !important;
+          }
+          
+          /* ===== END MOSBOT LAYOUT ===== */
+          EOF
+          
+          echo "=== New header layout created ==="
+          echo "Right: Login | Center: Big מוסבוט | Left: Logo"
+          
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m "Create new header layout with corners and big centered title"
+          git push
