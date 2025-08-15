@@ -185,6 +185,7 @@ class Approach(ABC):
             filters.append(security_filter)
         return None if len(filters) == 0 else " and ".join(filters)
 
+
 async def search(
     self,
     top: int,
@@ -207,9 +208,9 @@ async def search(
         search_text = " ".join(fuzzy_words) if fuzzy_words else query_text
     else:
         search_text = query_text if use_text_search else ""
-    
+
     search_vectors = vectors if use_vector_search else []
-    
+
     if use_semantic_ranker:
         results = await self.search_client.search(
             search_text=search_text,
@@ -219,7 +220,7 @@ async def search(
             query_rewrites="generative" if use_query_rewriting else None,
             vector_queries=search_vectors,
             query_type=QueryType.FULL,  # Enable Lucene syntax for fuzzy
-            query_language=self.query_language if self.query_language != 'he-il' else None,  # Disable for Hebrew
+            query_language=self.query_language if self.query_language != "he-il" else None,  # Disable for Hebrew
             query_speller=None,  # Disable speller for Hebrew
             semantic_configuration_name="default",
             semantic_query=query_text,  # Keep original for semantic
@@ -501,4 +502,3 @@ async def search(
         context: dict[str, Any] = {},
     ) -> AsyncGenerator[dict[str, Any], None]:
         raise NotImplementedError
-
