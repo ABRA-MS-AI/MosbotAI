@@ -247,3 +247,50 @@
         margin-right: 0;
     }
 }
+
+/* ===== MOSBOT UI FIXES - Added for proper alignment ===== */
+
+/* Fix header container layout for RTL */
+.headerContainer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-direction: row !important;
+}
+
+/* Create three sections in header */
+.headerContainer > * {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* Logo section - align to right */
+.headerTitleContainer {
+    justify-content: flex-end !important;
+    margin-left: 0 !important;
+}
+
+/* Navigation - center it */
+.headerContainer nav {
+    justify-content: center !important;
+}
+
+/* Login button container - align to left */
+.loginMenuContainer {
+    justify-content: flex-start !important;
+    order: -1 !important; /* Move to left side */
+}
+
+/* Fix navigation list to be horizontal on desktop */
+@media (min-width: 992px) {
+    .headerNavList {
+        flex-direction: row !important;
+        gap: 1rem !important;
+        position: static !important;
+        background: transparent !important;
+        justify-content: center !important;
+    }
+}
+
+/* ===== END OF MOSBOT FIXES ===== */

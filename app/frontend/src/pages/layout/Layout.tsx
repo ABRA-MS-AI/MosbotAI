@@ -9,7 +9,7 @@ import { LoginButton } from "../../components/LoginButton";
 import { IconButton } from "@fluentui/react";
 
 // Import company logo
-import logo from "../../assets/images/logo.svg";
+import logo from "../../assets/images/mosbot-logo.png";
 
 const Layout = () => {
     const { t } = useTranslation();
@@ -47,7 +47,7 @@ const Layout = () => {
                             alt="Company Logo" 
                             className={styles.headerLogo}
                         />
-                        <h3 className={styles.headerTitle}>{t("headerTitle")}</h3>
+                        <h3 className={styles.headerTitle}>"מוסבוט"</h3>
                     </Link>
                     <nav>
                         <ul className={`${styles.headerNavList} ${menuOpen ? styles.show : ""}`}>
